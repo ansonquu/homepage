@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SEO">
+    <meta name="keywords" content="SEO">
+    <link rel="shortcut icon" href="页头地址">
+    <title>XXXの主页</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zhangyiming748/MiSans@latest/MiSans-Bold/stylesheet.css">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            font-family: 'SimSun', SimSun, '宋体', serif !important;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            position: relative;
+            height: 100%;
+            overflow-x: hidden;
+            background: #f7f9fa;
+        }
+        .misans-name {
+            font-family: 'MiSans-Bold', 'MiSans', 'SimSun', '宋体', serif !important;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+        }
+        .lang-switch {
+            position: absolute;
+            top: 32px;
+            right: 48px;
+            z-index: 10;
+        }
+        .lang-switch a {
+            display: inline-block;
+            padding: 7px 18px;
+            background: linear-gradient(90deg, #0078ff 60%, #00c6ff 100%);
+            color: #fff;
+            border-radius: 18px;
+            font-size: 1em;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(0,120,255,0.10);
+        }
+        .lang-switch a:hover {
+            background: linear-gradient(90deg, #005fcc 60%, #00aaff 100%);
+        }
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(8px) saturate(1.2);
+            z-index: 1;
+        }
+        .center-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        .container {
+            max-width: 480px;
+            background: rgba(255,255,255,0.92);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 1.5px 8px rgba(0,120,255,0.08);
+            padding: 56px 38px 38px 38px;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+            backdrop-filter: blur(2px) saturate(1.1);
+            animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
+            display: inline-block;
+            min-width: 320px;
+            max-width: 100vw;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: none; }
+        }
+        .avatar-outer {
+            background: linear-gradient(135deg, #6dd5ed 0%, #2193b0 100%);
+            padding: 4px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 16px rgba(33,147,176,0.13);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .avatar-outer:hover {
+            box-shadow: 0 6px 32px rgba(33,147,176,0.22);
+            transform: scale(1.06) rotate(-2deg);
+        }
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: #e3e3e3;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+            border: 4px solid #fff;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        h1 {
+            margin: 0 0 12px 0;
+            font-size: 2.4em;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            color: #1a2a3a;
+            text-shadow: 0 1px 0 #fff, 0 2px 8px rgba(0,120,255,0.04);
+        }
+        h2 {
+            margin: 0 0 22px 0;
+            font-size: 1.18em;
+            font-weight: 400;
+            color: #4a6fa1;
+            letter-spacing: 0.04em;
+        }
+        p {
+            color: #444;
+            font-size: 1.09em;
+            margin-bottom: 38px;
+            line-height: 1.8;
+            text-shadow: 0 1px 0 #fff;
+        }
+        .social-row {
+            display: flex;
+            justify-content: flex-start;
+            gap: 22px;
+            margin-bottom: 36px;
+            width: 100%;
+            overflow-x: auto;
+            padding: 0 8px;
+            box-sizing: border-box;
+            flex-wrap: nowrap;
+            scrollbar-width: none;
+        }
+        .social-row::-webkit-scrollbar {
+            display: none;
+        }
+        .social-row a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e0e7ef 60%, #f4f8ff 100%);
+            box-shadow: 0 2px 8px rgba(0,120,255,0.08);
+            color: #0078ff;
+            font-size: 1.5em;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+            text-decoration: none;
+        }
+        .social-row a:hover {
+            background: linear-gradient(135deg, #0078ff 60%, #00c6ff 100%);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(0,120,255,0.18);
+            transform: scale(1.12);
+        }
+        .wechat-hover {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .wechat-qrcode {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 110%;
+            transform: translateX(-50%);
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+            padding: 4px;
+            z-index: 10;
+            min-width: 0;
+            min-height: 0;
+            text-align: center;
+            animation: fadeIn .25s;
+            /* 不设置max-width/max-height */
+        }
+        .wechat-qrcode img {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 500px;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            background: #f4f4f4;
+        }
+        .wechat-tip {
+            display: block;
+            color: #4a6fa1;
+            font-size: 0.98em;
+            margin-top: 2px;
+        }
+        .contact-btn {
+            display: inline-block;
+            padding: 15px 48px;
+            background: linear-gradient(90deg, #0078ff 60%, #00c6ff 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.18em;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+            cursor: pointer;
+            box-shadow: 0 2px 12px rgba(0,120,255,0.13);
+            letter-spacing: 0.04em;
+            outline: none;
+            position: relative;
+        }
+        .contact-btn:active {
+            background: linear-gradient(90deg, #005fcc 60%, #00aaff 100%);
+            box-shadow: 0 1px 4px rgba(0,120,255,0.10);
+            transform: scale(0.97);
+        }
+        .contact-btn:hover {
+            background: linear-gradient(90deg, #005fcc 60%, #00aaff 100%);
+            box-shadow: 0 4px 18px rgba(0,120,255,0.18);
+        }
+        .footer-box {
+            margin: 36px auto 18px auto;
+            background: rgba(255,255,255,0.92);
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,120,255,0.10), 0 1.5px 8px rgba(0,120,255,0.04);
+            padding: 16px 32px;
+            color: #7a8fa6;
+            font-size: 1em;
+            letter-spacing: 0.04em;
+            text-align: center;
+            opacity: 0.92;
+            user-select: none;
+            text-shadow: 0 1px 0 #fff;
+            max-width: 340px;
+        }
+        @media (max-width: 600px) {
+            html, body {
+                font-size: 15px;
+            }
+            .container {
+                padding: 18px 2vw 10px 2vw;
+                max-width: 98vw;
+                border-radius: 14px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            }
+            .avatar-outer {
+                margin-bottom: 16px;
+            }
+            .avatar, .avatar-outer {
+                width: 68px;
+                height: 68px;
+                min-width: 68px;
+                min-height: 68px;
+            }
+            .avatar img {
+                width: 100%;
+                height: 100%;
+            }
+            h1 {
+                font-size: 1.5em;
+                margin-bottom: 8px;
+            }
+            h2 {
+                font-size: 1em;
+                margin-bottom: 12px;
+            }
+            p {
+                font-size: 0.98em;
+                margin-bottom: 22px;
+            }
+            .social-row {
+                gap: 12px;
+                flex-wrap: wrap;
+                margin-bottom: 22px;
+            }
+            .social-row a {
+                width: 32px;
+                height: 32px;
+                font-size: 1em;
+            }
+            .wechat-qrcode {
+                left: 50%;
+                top: 120%;
+                min-width: 80px;
+                max-width: 90vw;
+                padding: 6px 6px 2px 6px;
+            }
+            .wechat-qrcode img {
+                max-width: 80vw;
+                max-height: 40vw;
+            }
+            .contact-btn {
+                padding: 10px 0;
+                width: 90vw;
+                max-width: 320px;
+                font-size: 1em;
+                border-radius: 22px;
+            }
+            .footer-box {
+                padding: 8px 2vw;
+                font-size: 0.92em;
+                max-width: 98vw;
+                margin: 18px auto 8px auto;
+                border-radius: 10px;
+            }
+            .lang-switch {
+                top: 12px;
+                right: 12px;
+            }
+            #page-bg {
+                width: 100vw !important;
+                height: 100vh !important;
+                object-fit: cover !important;
+            }
+        }
+        .wechat-hover:hover .wechat-qrcode {
+            display: block;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+</head>
+<body>
+    <div class="lang-switch">
+        <a href="/en/index.html">English</a>
+    </div>
+    <img id="page-bg" src="背景照片链接" alt="背景" style="
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        object-fit: cover;
+        z-index: 0;
+        pointer-events: none;
+        user-select: none;
+    ">
+    <div class="overlay"></div>
+    <div class="center-wrapper">
+        <div class="container">
+            <div class="avatar-outer">
+                <div class="avatar">
+                    <img src="头像链接" alt="头像">
+                </div>
+            </div>
+            <h1 class="misans-name">作者</h1>
+            <h2>职位/名字</h2>
+            <p>一言/简介</p>
+            <div class="social-row">
+                <span class="wechat-hover">
+                    <a href="微信二维码照片地址" title="微信"><i class="fab fa-weixin"></i></a>
+                    <span class="wechat-qrcode">
+                        <img src="微信二维码照片地址" alt="微信二维码" />
+                        <span class="wechat-tip"></span>
+                    </span>
+                </span>
+                <a href="https://github.com/ansonquu" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <!--图标为font awesome，更多图标 https://fontawesome.com/search -->
+            </div>
+            <a class="contact-btn" href="你的介绍链接" target="_blank">介绍</a>
+        </div>
+        <div class="footer-box">
+            Copyright &copy; 2024-2025<br>
+            <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#0078ff;text-decoration:none;display:inline-flex;align-items:center;">
+                <img src="/src/icp.ico" alt="备案图标" style="height:1em;width:auto;margin-right:6px;vertical-align:middle;display:inline-block;">
+                省份ICP备XXXXXXXXXX号
+            </a>
+            <a href="https://beian.mps.gov.cn/#/query/webSearch?code=XXXXXXXXXXXXXXX" target="_blank" style="color:#0078ff;text-decoration:none;display:inline-flex;align-items:center;">
+                <img src="/src/beian.png" alt="备案图标" style="height:1em;width:auto;margin-right:6px;vertical-align:middle;display:inline-block;">
+                省份公网安备XXXXXXXXXXXXXXX号
+            </a>
+        </div>
+    </div>
+</body>
+</html> 
